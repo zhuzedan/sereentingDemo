@@ -1,0 +1,290 @@
+/* 列表筛选 */
+ 
+.newHouseTabOut {
+  width: 100%;
+  height: 80rpx;
+}
+ 
+.newHouseTab {
+  width: 100%;
+  height: 80rpx;
+  box-sizing: border-box;
+  padding: 0 24rpx;
+  background-color: #f6f6f6;
+  z-index: 999;
+}
+ 
+.fixedTop {
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+ 
+.newHouseTabLi {
+  width: 156rpx;
+  margin-right: 20rpx;
+}
+ 
+.newHouseTabLi-msg {
+  font-size: 26rpx;
+  color: #404040;
+  line-height: 75rpx;
+}
+ 
+.newHouseTabLi-sj {
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAAICAYAAAAftBSpAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTM4IDc5LjE1OTgyNCwgMjAxNi8wOS8xNC0wMTowOTowMSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTcgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjExMjY5M0EwQzQ4NDExRTlBRjc2QUIxMDJEQjU1QUM4IiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjExMjY5M0ExQzQ4NDExRTlBRjc2QUIxMDJEQjU1QUM4Ij4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MTEyNjkzOUVDNDg0MTFFOUFGNzZBQjEwMkRCNTVBQzgiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6MTEyNjkzOUZDNDg0MTFFOUFGNzZBQjEwMkRCNTVBQzgiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz7j3SwbAAAAVElEQVR42mKcOXOmJwMDw3ogZmcgHWwH4kAmGAOIf5JjAEgfE7oAqQaAOEy4JIg1AN0QYgzCKs+ER+EvYi1gwmNjAJJBeF3IRMDvIIM2EgorgAADACLHHvGu47KWAAAAAElFTkSuQmCC);
+  background-repeat: no-repeat;
+  background-size: 17rpx 8rpx;
+  background-position: center;
+  width: 17rpx;
+  height: 75rpx;
+  margin-left: 10rpx;
+}
+ 
+.newHouseTabLi.on .newHouseTabLi-sj {
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAAICAYAAAAftBSpAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTM4IDc5LjE1OTgyNCwgMjAxNi8wOS8xNC0wMTowOTowMSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTcgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjY5QUEyQjY0QzRBMDExRTlBMjlERTlGQkNGRUY0M0QwIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjY5QUEyQjY1QzRBMDExRTlBMjlERTlGQkNGRUY0M0QwIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6NjlBQTJCNjJDNEEwMTFFOUEyOURFOUZCQ0ZFRjQzRDAiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6NjlBQTJCNjNDNEEwMTFFOUEyOURFOUZCQ0ZFRjQzRDAiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz74a4vsAAAAU0lEQVR42mL8X8rgycDAsB6I2RlIB9uBOJAJxgDin+QYANLHhC5AqgEgDhMuCWINQDeEGIOwyjPhUfiLWAuY8NgYgGQQXhcyEfA7yKCNhMIKIMAAaM0emlkSnlEAAAAASUVORK5CYII=);
+}
+ 
+.newHouseTabLi.on .newHouseTabLi-msg {
+  color: #ff7500;
+}
+ 
+.newHouseTabLi-sx {
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTM4IDc5LjE1OTgyNCwgMjAxNi8wOS8xNC0wMTowOTowMSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTcgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjk2REY3NzdBQzQ4NTExRTk5MjlDQjlEMUI3NUE2RkYyIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjk2REY3NzdCQzQ4NTExRTk5MjlDQjlEMUI3NUE2RkYyIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6OTZERjc3NzhDNDg1MTFFOTkyOUNCOUQxQjc1QTZGRjIiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6OTZERjc3NzlDNDg1MTFFOTkyOUNCOUQxQjc1QTZGRjIiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz53yOxpAAABQklEQVR42mJ0cHBgwAMkgVgMiC/CBPbv3w+mHR0dGUgBTHjkkoD4IRBfAOJlONQwQx2xhVyL/IB4FhCzAPF3II4EYjks6niAWA+IbcixyByIl0NdWwXEd6Di/AwUAHSLVIB4MxBzAfF0IO5goBJAtkgUiLdD6U1AnMtARQCziAvqE5CPTkLj5C+1LWKEpipzaHz4AvE3BioDJmjK8QTi10g01QEo+X4GYmMg/gTEjxhoBFig9BUGGgMmBjqBUYtGLQIVAvbIyZsWwAladv4HFXG08pEuEK8DYjYgng3E/2hhkSjUEn5oLVBAizjCWQtQ0yJmaM2MtRagpkWToW0NrLUApRZ9hTZeQPGRCcQ/oT65Q04+ugvEH4D4GRa5P0CcAw2iV0AcDo0bnNUEPhAKxOxQ12MD84B4CRD/huYZrAAgwACzkj6mJZhH0AAAAABJRU5ErkJggg==);
+  background-repeat: no-repeat;
+  background-size: 26rpx 26rpx;
+  background-position: center;
+  width: 50rpx;
+  height: 75rpx;
+  margin-right: 0;
+}
+ 
+.newHouseTabLi-sx.on {
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTM4IDc5LjE1OTgyNCwgMjAxNi8wOS8xNC0wMTowOTowMSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTcgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjg5OUJCODM1QzRBMTExRTk5NTM3Qjc0Mjc3OEI3QjI3IiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjg5OUJCODM2QzRBMTExRTk5NTM3Qjc0Mjc3OEI3QjI3Ij4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6ODk5QkI4MzNDNEExMTFFOTk1MzdCNzQyNzc4QjdCMjciIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6ODk5QkI4MzRDNEExMTFFOTk1MzdCNzQyNzc4QjdCMjciLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz6SDGLiAAABWUlEQVR42uyWMUvDQBTH36VFIQidKrg4uerikEUQ3Bx0FVc3QaGLGfwEktVB0F03BxX8DN0sONZBBwe7iGJFtJ6/6CsGTarUOxf9wy93JEf+d7l3ec/YNemlERiGRuGIxMp3FPR4tgTncAK7BWNKEpsGHPVrNA/bUIZ7WITRnHFDMAFT/RhFsPc6W5F1aOr9ivxAH43G4BBC2IINcaSsURWOtT2AVXGorlGoK0lXVNc96bg2MhpVke7HHLTFsQKNnFloZVrnSsP3FibhBi7Ek8ranopnBfJL+jf660axiWA6G94+TGb032nph4Enk3Gu+zAAO2Th58CDSVVNKpoFau73iE/0KQsktuPWKDYlzczvWSCxbR9Rt6m1xlsWSGzLZXjfafGS7scyPOhKmv2cozO4hsucZ0+woonyChYwqee9xHxRQHbP2qDOPr+AjE0axo/0C6vJFwEGABS7Tyz9AQr2AAAAAElFTkSuQmCC);
+}
+ 
+.w90 {
+  width: 90rpx;
+}
+ 
+.wmax130 {
+  max-width: 130rpx;
+}
+ 
+.w170 {
+  width: 170rpx;
+}
+ 
+.wmax144 {
+  max-width: 144rpx;
+}
+ 
+/* 新房列表 */
+ 
+.newHouseUl {
+  padding: 0 36rpx;
+}
+ 
+/* 下拉select样式 */
+ 
+.newHouseMask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 990;
+  font-size: 28rpx;
+}
+ 
+.newHouseMaskLi {
+  width: 100%;
+  background-color: #fff;
+  padding-top: 80rpx;
+  box-sizing: border-box;
+  position: relative;
+}
+ 
+.newHouseMaskLi-locatin, .newHouseMaskLi-price {
+  height: 588rpx;
+}
+ 
+.newHouseMaskLi-one {
+  width: 100%;
+  height: 588rpx;
+}
+ 
+.bg_e5e5e5 {
+  background-color: #e5e5e5;
+}
+ 
+.newHouseMaskLi-oneLi, .newHouseMaskLi-price-li {
+  height: 88rpx;
+  line-height: 88rpx;
+}
+ 
+.newHouseMaskLi-price-li {
+  text-align: center;
+}
+ 
+.maxw175 {
+  max-width: 175rpx;
+  box-sizing: border-box;
+  padding-left: 50rpx;
+}
+ 
+.newHouseMaskLi-oneLi.on, .newHouseMaskLi-price-li.on {
+  background-color: #fff;
+  color: #ff7500;
+}
+ 
+.newHouseMaskLi-two, .newHouseMaskLi-three {
+  height: 100%;
+  position: absolute;
+  right: 0;
+  top: 80rpx;
+}
+ 
+.newHouseMaskLi-two {
+  width: 575rpx;
+}
+ 
+.newHouseMaskLi-three {
+  width: 276rpx;
+}
+ 
+.bg_fff {
+  background-color: #fff;
+}
+ 
+.newHouseMaskLi-twoLi, .newHouseMaskLi-threeLi {
+  box-sizing: border-box;
+  padding-left: 40rpx;
+  height: 88rpx;
+  line-height: 88rpx;
+}
+ 
+.newHouseMaskLi-twoLi.on, .newHouseMaskLi-threeLi.on {
+  color: #ff7500;
+}
+ 
+.newHouseMaskLi-twoLi {
+  width: 295rpx;
+}
+ 
+.newHouseMaskLi-threeLi {
+  width: 276rpx;
+}
+ 
+/* 筛选 */
+ 
+.newHouseMaskLi-sx {
+  height: 100%;
+  padding-left: 24rpx;
+  padding-right: 24rpx;
+  padding-bottom: 95rpx;
+}
+ 
+.newHouseMaskLi-sx-title {
+  font-size: 30rpx;
+  color: #404040;
+  height: 82rpx;
+  line-height: 82rpx;
+}
+ 
+.newHouseMaskLi-sx-li {
+  float: left;
+  width: 160rpx;
+  height: 60rpx;
+  text-align: center;
+  line-height: 60rpx;
+  font-size: 24rpx;
+  color: #404040;
+  background-color: #f8f8f8;
+  border-radius: 10rpx;
+  margin-right: 20rpx;
+  margin-bottom: 30rpx;
+}
+ 
+.newHouseMaskLi-sx-li:nth-child(4), .newHouseMaskLi-sx-li:nth-child(8),
+.newHouseMaskLi-sx-li:nth-child(12) {
+  margin-right: 0;
+}
+ 
+.newHouseMaskLi-sx-li.on {
+  background-color: #ff7500;
+  color: #fff;
+}
+ 
+.newHouseMaskLi-sx-btn {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 94rpx;
+  border-top: 1rpx solid #e6e6e6;
+}
+ 
+.newHouseMaskLi-sx-btn-cancle, .newHouseMaskLi-sx-btn-confirm {
+  flex: 1;
+  text-align: center;
+  line-height: 94rpx;
+  font-size: 36rpx;
+}
+ 
+.newHouseMaskLi-sx-btn-cancle {
+  background-color: #fff;
+  color: #212121;
+}
+ 
+.newHouseMaskLi-sx-btn-confirm {
+  background-color: #ff7500;
+  color: #fff;
+}
+ 
+.max256 {
+  max-height: 256rpx;
+}
+ 
+/* 弹性盒子 */
+.flex {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  display: box;
+  flex-wrap:wrap;
+}
+ 
+.alignC{
+  align-items: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  -o-align-items: center;
+}
+ 
+.line1{
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis; 
+}
+ 
+.clearfix:before, .clearfix:after {
+    content: '.';
+    display: block;
+    visibility: hidden;
+    font-size: 0;
+    line-height: 0;
+    width: 0;
+    height: 0;
+}
+.clearfix:after {
+  clear: both;
+}
+.clearfix {
+  zoom: 1;
+}

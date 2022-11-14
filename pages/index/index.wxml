@@ -1,0 +1,158 @@
+<!-- 列表筛选 -->
+<view class='newHouseTabOut'>
+  <view class='newHouseTab flex {{maskFlag?"fixedTop":""}}'>
+    <!---- 区域 ---->
+    <view class='newHouseTabLi flex alignC {{location.locationName.name?"on":""}} xflb_wz' data-id="0" catchtap="tab">
+      <view class='newHouseTabLi-msg wmax130 line1'>{{location.locationName.name?location.locationName.name:"位置"}}</view>
+      <view class='newHouseTabLi-sj'></view>
+    </view>
+ 
+    <!---- 价格 ---->
+    <view class='newHouseTabLi flex alignC w170 {{priceIndex>0?"on":""}} xflb_jg' data-id="1" catchtap="tab">
+      <view class='newHouseTabLi-msg wmax144 line1'>
+        {{priceIndex>0?pageConfig.price[priceIndex].tag_name:"价格"}}
+      </view>
+      <view class='newHouseTabLi-sj'></view>
+    </view>
+    <!---- 户型 ----->
+    <view class='newHouseTabLi flex alignC {{roomtagIndex>0?"on":""}} xflb_hx' data-id="2" catchtap="tab">
+      <view class='newHouseTabLi-msg wmax130 line1'>
+        {{roomtagIndex>0?pageConfig.roomtag[roomtagIndex].tag_name:"户型"}}
+      </view>
+      <view class='newHouseTabLi-sj'></view>
+    </view>
+    <!----- 筛选 ----->
+    <view class='newHouseTabLi flex alignC w90 {{shaixuan.tese.length || shaixuan.leixing > -1 || shaixuan.mianji.length || shaixuan.kaipan > -1 || shaixuan.zhuangxiu > -1?"on":""}} xflb_sx' data-id="3" catchtap="tab">
+      <view class='newHouseTabLi-msg'>筛选</view>
+      <view class='newHouseTabLi-sj'></view>
+    </view>
+    <!-- 排序 -->
+    <view class='newHouseTabLi-sx {{paixuIndex>0?"on":""}} xflb_px' data-id="4" catchtap="tab"></view>
+ 
+  </view>
+</view>
+ 
+<!-- 下拉select样式 -->
+<view class='newHouseMask' wx:if="{{maskFlag?true:false}}" catchtap="maskClick">
+ 
+  <!-- 位置 -->
+  <view class='newHouseMaskLi newHouseMaskLi-locatin' wx:if="{{tabid==0?true:false}}" catchtap="prevent">
+    <!-- 一级 -->
+    <scroll-view scroll-y class='newHouseMaskLi-one bg_e5e5e5'>
+      <block wx:for="{{location.locationOneArr}}" wx:for-index="locationOneI">
+        <block wx:if="{{locationOneI==0||locationOneI==1}}">
+          <view class='newHouseMaskLi-oneLi  {{location.locationOneIndex==locationOneI?"on":""}}' data-index="{{locationOneI}}" catchtap='clickLocationOne'>
+            <view class='maxw175 line1'>{{item.tag_name}}</view>
+          </view>
+        </block>
+ 
+        <!-- 对于板块和地铁做限制，可能会不存在 -->
+        <block wx:if="{{(locationOneI==2)&&(pageConfig.block.length)}}">
+          <view class='newHouseMaskLi-oneLi  {{location.locationOneIndex==locationOneI?"on":""}}' data-index="{{locationOneI}}" catchtap='clickLocationOne'>
+            <view class='maxw175 line1'>{{item.tag_name}}</view>
+          </view>
+        </block>
+        <block wx:if="{{(locationOneI==3)&&(pageConfig.metro.length)}}">
+          <view class='newHouseMaskLi-oneLi  {{location.locationOneIndex==locationOneI?"on":""}}' data-index="{{locationOneI}}" catchtap='clickLocationOne'>
+            <view class='maxw175 line1'>{{item.tag_name}}</view>
+          </view>
+        </block>
+      </block>
+    </scroll-view>
+    <!-- 二级,区域 -->
+    <scroll-view scroll-y class='newHouseMaskLi-two bg_fff' wx:if='{{(location.locationOneIndex==1)&&pageConfig.district.length}}'>
+      <block wx:for="{{pageConfig.district}}" wx:for-index="locationTwoI">
+        <view class='newHouseMaskLi-twoLi line1 {{location.locationTwoIndex1==locationTwoI?"on":""}}' data-index='{{locationTwoI}}' data-type='1' data-name="{{item.tag_name}}" catchtap='clickLocationTwo'>{{item.tag_name}}</view>
+      </block>
+    </scroll-view>
+    <!-- 二级，板块 -->
+    <scroll-view scroll-y class='newHouseMaskLi-two bg_fff' wx:if='{{(location.locationOneIndex==2)&&pageConfig.block.length}}'>
+      <block wx:for="{{pageConfig.block}}" wx:for-index="locationTwoI">
+        <view class='newHouseMaskLi-twoLi line1 {{location.locationTwoIndex2==locationTwoI?"on":""}}' data-index='{{locationTwoI}}' data-type='2' data-name="{{item.tag_name}}" catchtap='clickLocationTwo'>{{item.tag_name}}</view>
+      </block>
+    </scroll-view>
+    <!-- 二级，地铁 -->
+    <scroll-view scroll-y class='newHouseMaskLi-two bg_fff' wx:if='{{(location.locationOneIndex==3)&&pageConfig.metro.length}}'>
+      <block wx:for="{{pageConfig.metro}}" wx:for-index="locationTwoI">
+        <view class='newHouseMaskLi-twoLi line1 {{location.locationTwoIndex3==locationTwoI?"on":""}}' data-index='{{locationTwoI}}' data-type='3' data-name="{{item.name}}" catchtap='clickLocationTwo'>{{item.name}}</view>
+      </block>
+    </scroll-view>
+    <!-- 三级 -->
+    <scroll-view scroll-y class='newHouseMaskLi-three bg_fff' wx:if="{{location.locationOneIndex==3&&(location.locationTwoIndex3>-1)}}">
+      <block wx:for="{{pageConfig.metro[location.locationTwoIndex3].station}}" wx:for-index="locationThreeI">
+        <view class='newHouseMaskLi-threeLi line1 {{location.locationThreeIndex==locationThreeI?"on":""}}' data-index='{{locationThreeI}}' data-name="{{item.name}}" data-type='3' catchtap='clickLocationThree'>{{item.name}}</view>
+      </block>
+    </scroll-view>
+  </view>
+ 
+  <!-- 价格 -->
+  <scroll-view scroll-y class='newHouseMaskLi newHouseMaskLi-price' wx:if="{{tabid==1?true:false}}" catchtap="prevent">
+    <block wx:for="{{pageConfig.price}}" wx:for-index="priceI">
+      <view class='newHouseMaskLi-price-li {{priceI==priceIndex?"on":""}}' data-index="{{priceI}}" catchtap='clickSelectOne'>{{item.tag_name}}</view>
+    </block>
+  </scroll-view>
+ 
+  <!-- 户型 -->
+  <scroll-view scroll-y class='newHouseMaskLi newHouseMaskLi-price' wx:if="{{tabid==2?true:false}}" catchtap="prevent">
+    <block wx:for="{{pageConfig.roomtag}}" wx:for-index="roomtagI">
+      <view class='newHouseMaskLi-price-li {{roomtagI==roomtagIndex?"on":""}}' data-index="{{roomtagI}}" catchtap='clickSelectOne'>{{item.tag_name}}</view>
+    </block>
+    <view class='newHouseMaskLi-price-li on'>不限</view>
+  </scroll-view>
+  <!-- 筛选 -->
+  <view style='width:100%;height:100%;' wx:if="{{tabid==3?true:false}}">
+    <scroll-view scroll-y class='newHouseMaskLi newHouseMaskLi-sx' catchtap="prevent">
+      <!-- 特色 -->
+      <block wx:if="{{pageConfig.recommendTag}}">
+        <view class='newHouseMaskLi-sx-title'>特色</view>
+        <view class='newHouseMaskLi-sx-ul clearfix'>
+          <block wx:for="{{pageConfig.recommendTag}}" wx:for-item="recommendTag">
+            <view class='newHouseMaskLi-sx-li {{recommendTag.flag==1?"on":""}}' data-index="{{index}}" data-id="{{recommendTag.tag_id}}" data-type="0" catchtap='shaixuanTwo'>
+              {{recommendTag.tag_name}}
+            </view>
+          </block>
+        </view>
+      </block>
+      <!-- 类型 -->
+      <block wx:if="{{pageConfig.channel}}">
+        <view class='newHouseMaskLi-sx-title'>类型</view>
+        <view class='newHouseMaskLi-sx-ul clearfix'>
+          <view class='newHouseMaskLi-sx-li {{shaixuan.leixing==index?"on":""}}' wx:for="{{pageConfig.channel}}" wx:for-item="channel" catchtap='shaixuanOne' data-type='1' data-index="{{index}}">{{channel.tag_name}}</view>
+        </view>
+      </block>
+      <!-- 面积 -->
+      <block wx:if="{{pageConfig.mjtag}}">
+        <view class='newHouseMaskLi-sx-title'>面积</view>
+        <view class='newHouseMaskLi-sx-ul clearfix'>
+          <view class='newHouseMaskLi-sx-li {{mjtag.flag==1?"on":""}}' wx:for="{{pageConfig.mjtag}}" wx:for-item="mjtag" data-index="{{index}}" data-type="2" data-id="{{mjtag.tag_id}}" catchtap='shaixuanTwo'>{{mjtag.tag_name}}</view>
+        </view>
+      </block>
+      <!-- 开盘时间 -->
+      <block wx:if="{{pageConfig.kptag}}">
+        <view class='newHouseMaskLi-sx-title'>开盘时间</view>
+        <view class='newHouseMaskLi-sx-ul clearfix'>
+          <view class='newHouseMaskLi-sx-li {{shaixuan.kaipan==index?"on":""}}' wx:for="{{pageConfig.kptag}}" wx:for-item="kptag" catchtap='shaixuanOne' data-type='3' data-index="{{index}}">{{kptag.tag_name}}</view>
+        </view>
+      </block>
+      <!-- 装修 -->
+      <block wx:if="{{pageConfig.decoratetag}}">
+        <view class='newHouseMaskLi-sx-title'>装修</view>
+        <view class='newHouseMaskLi-sx-ul clearfix'>
+          <view class='newHouseMaskLi-sx-li {{shaixuan.zhuangxiu==index?"on":""}}' wx:for="{{pageConfig.decoratetag}}" wx:for-item="decoratetag" catchtap='shaixuanOne' data-type='4' data-index="{{index}}">{{decoratetag.tag_name}}</view>
+        </view>
+      </block>
+    </scroll-view>
+    <!-- 底部悬浮 -->
+    <view class='newHouseMaskLi-sx-btn flex' style='z-index:999'>
+      <view class='newHouseMaskLi-sx-btn-cancle' catchtap='cancle'>清空</view>
+      <view class='newHouseMaskLi-sx-btn-confirm' catchtap='confirm'>确定</view>
+    </view>
+  </view>
+ 
+  <!-- 排序 -->
+  <scroll-view scroll-y class='newHouseMaskLi newHouseMaskLi-price' wx:if="{{tabid==4?true:false}}" catchtap="prevent">
+    <block wx:for="{{pageConfig.paixu}}" wx:for-index="paixuI">
+      <view class='newHouseMaskLi-price-li {{paixuI==paixuIndex?"on":""}}' data-index="{{paixuI}}" catchtap='clickSelectOne'>{{item.tag_name}}</view>
+    </block>
+  </scroll-view>
+</view>
